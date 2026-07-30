@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Club 27</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  /* ====================================================================
+     EDIT YOUR STAGES DOWN IN THE <script> AT THE BOTTOM OF THIS FILE.
+     Look for the "STAGES" array. That's the only part you need to touch.
+     ==================================================================== */
+
+  :root{
+    --bg: #14100d;
+    --panel: #1d1712;
+    --panel-edge: #2c2118;
+    --gold: #c6a15b;
+    --gold-bright: #ecc87f;
+    --wine: #6e1f2b;
+    --cream: #ede3ce;
+    --muted: #9c8f72;
+    --danger: #c0524a;
+  }
+
+  *{ box-sizing: border-box; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  html, body{
+    height: 100%;
+  }
+
+  body{
+    margin: 0;
+    min-height: 100vh;
+    background:
+      radial-gradient(ellipse at 50% -10%, rgba(198,161,91,0.10), transparent 55%),
+      radial-gradient(ellipse at 50% 110%, rgba(0,0,0,0.6), transparent 60%),
+      repeating-linear-gradient(90deg, rgba(198,161,91,0.035) 0px, rgba(198,161,91,0.035) 1px, transparent 1px, transparent 64px),
+      var(--bg);
+    color: var(--cream);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 18px;
+  }
+
+  .stage-track{
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+
+  .tab{
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    padding: 5px 10px 6px;
+    border: 1px dashed var(--panel-edge);
+    color: var(--muted);
+    border-radius: 2px;
+    transition: all 0.4s ease;
+  }
+  .tab.done{
+    border-style: solid;
+    border-color: var(--gold);
+    background: var(--wine);
+    color: var(--gold-bright);
+    cursor: pointer;
+  }
+  .tab.done:hover{
+    background: #8a2b39;
+    box-shadow: 0 0 0 3px rgba(198,161,91,0.15);
+  }
+  .tab.current{
+    cursor: pointer;
+    border-style: solid;
+    border-color: var(--gold-bright);
+    color: var(--cream);
+    box-shadow: 0 0 0 3px rgba(198,161,91,0.15);
+  }
+  .tab.current:hover{
+    box-shadow: 0 0 0 3px rgba(198,161,91,0.25);
+  }
+  .tab.locked{
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  .card{
+    width: 100%;
+    max-width: 440px;
+    background: linear-gradient(180deg, var(--panel), #191410);
+    border: 1px solid var(--panel-edge);
+    border-radius: 3px;
+    padding: 40px 34px 34px;
+    position: relative;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.03);
+  }
+
+  .card::before{
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(198,161,91,0.25);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+
+  .ornament{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .ornament .line{
+    height: 1px;
+    width: 44px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .ornament .line.right{ background: linear-gradient(90deg, var(--gold), transparent); }
+  .ornament .diamond{
+    width: 8px; height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+
+  h1{
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.28em;
+    font-size: 30px;
+    margin: 6px 0 2px;
+    color: var(--gold-bright);
+    text-shadow: 0 0 24px rgba(198,161,91,0.25);
+  }
+
+  .subtitle{
+    text-align: center;
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 30px;
+  }
+
+  /* --- Wax seal signature element --- */
+  .seal-wrap{
+    display: flex;
+    justify-content: center;
+    margin: 4px 0 26px;
+    height: 78px;
+    position: relative;
+  }
+  .seal{
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #8a2b39, var(--wine) 65%, #4c141d 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    color: var(--gold-bright);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.15), inset 0 -3px 6px rgba(0,0,0,0.4);
+    transition: transform 0.7s cubic-bezier(.36,1.4,.4,1), opacity 0.7s ease;
+    position: absolute;
+  }
+  .seal.cracked{
+    transform: scale(0.4) rotate(35deg) translateY(-6px);
+    opacity: 0;
+  }
+
+  form{
+    transition: opacity 0.3s ease;
+  }
+
+  label{
+    display: block;
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  .input-row{
+    display: flex;
+    gap: 8px;
+  }
+
+  input[type="text"], input[type="password"]{
+    flex: 1;
+    background: #100c09;
+    border: 1px solid var(--panel-edge);
+    color: var(--cream);
+    font-family: 'Jost', sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    padding: 12px 14px;
+    border-radius: 2px;
+    outline: none;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  input:focus{
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(198,161,91,0.15);
+  }
+
+  button{
+    background: var(--gold);
+    color: #1a1410;
+    border: none;
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    font-size: 13px;
+    padding: 0 22px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  button:hover{ background: var(--gold-bright); }
+  button:active{ transform: translateY(1px); }
+
+  .feedback{
+    min-height: 20px;
+    text-align: center;
+    font-size: 12.5px;
+    letter-spacing: 0.05em;
+    margin-top: 14px;
+    color: var(--danger);
+  }
+
+  .hint-area{
+    text-align: center;
+    margin-top: 6px;
+  }
+  .hint-toggle{
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--muted);
+    font-family: 'Jost', sans-serif;
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-decoration: underline dotted;
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+  .hint-toggle:hover{ color: var(--gold-bright); }
+  .hint-text{
+    display: none;
+    margin-top: 10px;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--gold-bright);
+    line-height: 1.5;
+    padding: 0 6px;
+  }
+
+  @keyframes shake{
+    10%, 90% { transform: translateX(-1px); }
+    20%, 80% { transform: translateX(2px); }
+    30%, 50%, 70% { transform: translateX(-4px); }
+    40%, 60% { transform: translateX(4px); }
+  }
+  .shake{ animation: shake 0.5s ease; }
+
+  .note{
+    background: #efe6cf;
+    color: #2a2117;
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    padding: 24px 22px;
+    border-radius: 2px;
+    line-height: 1.6;
+    font-size: 15px;
+    box-shadow: 0 14px 34px rgba(0,0,0,0.35);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.6s ease 0.15s, transform 0.6s ease 0.15s;
+    position: relative;
+  }
+  .note::before{
+    content: "";
+    position: absolute;
+    top: -6px; left: 18px; right: 18px;
+    height: 6px;
+    background: repeating-linear-gradient(90deg, transparent 0 6px, rgba(0,0,0,0.12) 6px 8px);
+  }
+  .note.shown{
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .note .eyebrow{
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--wine);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .continue-btn{
+    display: block;
+    margin: 20px auto 0;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold-bright);
+  }
+  .continue-btn:hover{ background: rgba(198,161,91,0.12); }
+
+  .final{
+    text-align: center;
+  }
+  .final .eyebrow{
+    color: var(--gold);
+  }
+
+  footer{
+    text-align: center;
+    font-size: 10.5px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-top: 26px;
+  }
+
+</style>
+</head>
+<body>
+
+  <div style="width:100%; max-width:440px;">
+    <div class="stage-track" id="stageTrack"></div>
+
+    <div class="card">
+      <div class="ornament">
+        <div class="line"></div>
+        <div class="diamond"></div>
+        <div class="line right"></div>
+      </div>
+      <h1 id="clubTitle">Le Club 27</h1>
+      <div class="subtitle" id="subtitle">Knock twice. Speak the word.</div>
+
+      <div class="seal-wrap">
+        <div class="seal" id="seal">27</div>
+      </div>
+
+      <form id="passForm" autocomplete="off">
+        <label for="passInput" id="promptLabel">Password</label>
+        <div class="input-row">
+          <input type="text" id="passInput" placeholder="•••••••" autocomplete="off" spellcheck="false">
+          <button type="submit">Enter</button>
+        </div>
+        <div class="feedback" id="feedback" aria-live="polite"></div>
+        <div class="hint-area" id="hintArea" style="display:none;">
+          <button type="button" class="hint-toggle" id="hintToggle">Password's structure</button>
+          <div class="hint-text" id="hintText"></div>
+        </div>
+      </form>
+
+      <div class="note" id="noteBox">
+        <span class="eyebrow" id="noteEyebrow">Clue</span>
+        <div id="noteText"></div>
+        <button class="continue-btn" id="continueBtn" style="display:none;">Next door →</button>
+        <button class="continue-btn" id="backBtn" style="display:none;">← Back to your door</button>
+      </div>
+    </div>
+
+    <footer>Le Club 27 &middot; members only</footer>
+  </div>
+
+<script>
+
+  /* ====================================================================
+     EDIT ME: add, remove, or rewrite stages here.
+     - salt, iv, ciphertext: the password and clue are both baked into
+       these values — there is no plaintext password OR clue stored
+       anywhere in this file. Wrong passwords simply fail to decrypt.
+     - hint: OPTIONAL. Plain text, shown behind a "Password's structure" button
+       while players are stuck on this door. Unlike the clue, a hint
+       has to be readable before the password is known, so it can't be
+       encrypted the same way — a very determined player could view
+       page source and read hints for doors they haven't reached yet.
+       Leave it as an empty string ("") for doors with no hint.
+
+     Always use build_stages.py (the companion script) to generate this
+     block — do not hand-edit the salt/iv/ciphertext. Run it on your own
+     computer, enter each password, clue, and (optional) hint, and it
+     rewrites this whole block for you.
+     ==================================================================== */
+  // ===STAGES_START===
+  const STAGES = [
+    {
+      salt: "i1h1ifA7XuzSKG5xWH0JUA==",
+      iv: "/STA/mEn486znW2u",
+      ciphertext: "k+y4qKY/KG83cdHLQrVcyPsFAoBzfQEHERkiUwUXGu2keTEE6UEmPX9pyVYvShxl/pwtmmzlGF/A18CuqTy+cim7X7JwtsTnRicQZBTGUl4FZYaDzQVHqhv6cI66DUvwVJW8D4B6XXu5QhtVRFefxWMRRJIJKO0JT7j+yQ==",
+      hint: "hint number 1"
+    },
+    {
+      salt: "UESAnQrVYW3WwqZrkXUI4g==",
+      iv: "j4erUD5O+OuSQLMq",
+      ciphertext: "0uGSjZFFaP7MD2ZyjA6MuOLGiWJhL3AIiey6IKl1f9oLLrd/PqD0LYUZijKtUWqYtP/BMk0p3Q4FhCwrt0OlmVCS/HlaOJcHTNxtNrefHRwi2lsn/CEVBsLebLkypx96o27okluoFx00bWSJ2xE3CNHkHUU=",
+      hint: "hint number 2"
+    },
+    {
+      salt: "aOGJyK94V3tWX5D76mwAHA==",
+      iv: "D6cPiIlkz2jfZaqk",
+      ciphertext: "JsygmBUxwVZQQToea8qXfe5EGThiZTkgxMZ6W8ry15I+eYReWhQfuLpPWGLWJep3B1wNeQJf+dJQuP6EBMECzqyBSJ+yfgQJxLZOkWznCHwnq0ASCDHXnKXrHX5T4IW5vCbkr2fnGh93x0BG0TJmg4Q=",
+      hint: "hint number 3"
+    },
+    {
+      salt: "bVhlMUVkevSr8f8ubs2Kng==",
+      iv: "v+7mOVas//w+sEUD",
+      ciphertext: "nYaJwHZLFYH638TyA4uwaXbnAEKZ01LpdrYGn+AD8PWMyCneQmkcVC0BXzGm/SbnAs4e/hHd2GnOF8C6+ct7XwJMzBKUSgG2JGegjZHEB1EIJQ80WGBb9PY7jdg9oRR7QBgFZD3t",
+      hint: "hint number 4"
+    }
+  ];
+  // ===STAGES_END===
+
+  // Must match the ITERATIONS constant in build_stages.py exactly.
+  const PBKDF2_ITERATIONS = 250000;
+
+  function b64ToBytes(b64){
+    return Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+  }
+
+  // Tries to decrypt this stage's clue using the guessed password.
+  // Resolves with the clue text if the password was right.
+  // Throws if the password was wrong (AES-GCM's built-in check fails).
+  async function tryUnlock(stageData, guess){
+    const enc = new TextEncoder();
+    const keyMaterial = await crypto.subtle.importKey(
+      'raw', enc.encode(guess), { name: 'PBKDF2' }, false, ['deriveKey']
+    );
+    const key = await crypto.subtle.deriveKey(
+      { name: 'PBKDF2', salt: b64ToBytes(stageData.salt), iterations: PBKDF2_ITERATIONS, hash: 'SHA-256' },
+      keyMaterial,
+      { name: 'AES-GCM', length: 256 },
+      false,
+      ['decrypt']
+    );
+    const plainBuf = await crypto.subtle.decrypt(
+      { name: 'AES-GCM', iv: b64ToBytes(stageData.iv) },
+      key,
+      b64ToBytes(stageData.ciphertext)
+    );
+    return new TextDecoder().decode(plainBuf);
+  }
+
+  const FINAL_TITLE = "You're in.";
+  const FINAL_MESSAGE = "Enjoy the rest of the night. Tell the host you made it through every door.";
+
+  // ------------------------------------------------------------------
+  // Everything below this line runs the page. No need to edit it.
+  // ------------------------------------------------------------------
+
+
+  let stage = 0;              // number of doors successfully opened
+  let awaitingContinue = false; // true right after a correct entry, before player clicks "Next door"
+  let viewingIndex = null;     // set when player is looking back at an already-opened door
+  const decryptedClues = [];   // filled in as doors are opened — nothing here until it's earned
+
+  const stageTrack = document.getElementById('stageTrack');
+  const passForm = document.getElementById('passForm');
+  const passInput = document.getElementById('passInput');
+  const feedback = document.getElementById('feedback');
+  const seal = document.getElementById('seal');
+  const noteBox = document.getElementById('noteBox');
+  const noteText = document.getElementById('noteText');
+  const noteEyebrow = document.getElementById('noteEyebrow');
+  const continueBtn = document.getElementById('continueBtn');
+  const backBtn = document.getElementById('backBtn');
+  const promptLabel = document.getElementById('promptLabel');
+  const subtitle = document.getElementById('subtitle');
+  const clubTitle = document.getElementById('clubTitle');
+  const hintArea = document.getElementById('hintArea');
+  const hintToggle = document.getElementById('hintToggle');
+  const hintText = document.getElementById('hintText');
+
+  function renderTrack(){
+    stageTrack.innerHTML = '';
+    STAGES.forEach((_, i) => {
+      const tab = document.createElement('div');
+      const isDone = i < stage;
+      const isCurrent = i === stage;
+      tab.className = 'tab' + (isDone ? ' done' : isCurrent ? ' current' : ' locked');
+      tab.textContent = 'DOOR ' + (i + 1);
+      if (isDone){
+        tab.title = 'Click to re-read this clue';
+        tab.addEventListener('click', function(){
+          viewingIndex = i;
+          render();
+        });
+      } else if (isCurrent){
+        tab.title = viewingIndex !== null ? 'Back to where you are' : 'You are here';
+        tab.addEventListener('click', function(){
+          viewingIndex = null;
+          render();
+        });
+      } else {
+        tab.title = 'Not unlocked yet';
+      }
+      stageTrack.appendChild(tab);
+    });
+  }
+
+  // Single function that decides what's on screen based on the current state.
+  function render(){
+    renderTrack();
+    const isFinal = stage >= STAGES.length;
+
+    if (viewingIndex !== null){
+      // Reviewing a past door — read only, doesn't touch game progress.
+      noteEyebrow.textContent = 'Clue ' + (viewingIndex + 1);
+      noteText.textContent = decryptedClues[viewingIndex];
+      noteBox.classList.add('shown');
+      seal.classList.add('cracked');
+      passForm.style.display = 'none';
+      continueBtn.style.display = 'none';
+      backBtn.style.display = 'inline-block';
+      return;
+    }
+
+    backBtn.style.display = 'none';
+
+    if (awaitingContinue){
+      noteEyebrow.textContent = isFinal ? 'Welcome' : 'Clue ' + stage;
+      noteText.textContent = isFinal ? FINAL_MESSAGE : decryptedClues[stage - 1];
+      noteBox.classList.add('shown');
+      seal.classList.add('cracked');
+      passForm.style.display = 'none';
+      continueBtn.style.display = isFinal ? 'none' : 'inline-block';
+      return;
+    }
+
+    // Live: waiting for the next password.
+    noteBox.classList.remove('shown');
+    seal.classList.remove('cracked');
+    passForm.style.display = 'block';
+    continueBtn.style.display = 'none';
+    passInput.value = '';
+    feedback.textContent = '';
+    passInput.focus();
+
+    const hint = STAGES[stage] && STAGES[stage].hint;
+    hintText.style.display = 'none';
+    hintToggle.textContent = "Password's structure";
+    hintArea.style.display = hint ? 'block' : 'none';
+  }
+
+  const submitBtn = passForm.querySelector('button[type="submit"]');
+
+  passForm.addEventListener('submit', async function(e){
+    e.preventDefault();
+    const guess = passInput.value.trim().toLowerCase();
+    if (guess.length === 0) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = '...';
+    feedback.textContent = '';
+
+    try {
+      const clue = await tryUnlock(STAGES[stage], guess);
+      decryptedClues[stage] = clue;
+      stage += 1;
+      awaitingContinue = true;
+      if (stage >= STAGES.length){
+        clubTitle.textContent = FINAL_TITLE;
+        subtitle.textContent = 'The night is yours';
+      }
+      render();
+    } catch (err) {
+      feedback.textContent = "Nerd 😂 Try again.";
+      passInput.classList.remove('shake');
+      void passInput.offsetWidth;
+      passInput.classList.add('shake');
+    }
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Enter';
+  });
+
+  continueBtn.addEventListener('click', function(){
+    awaitingContinue = false;
+    promptLabel.textContent = 'Password';
+    render();
+  });
+
+  hintToggle.addEventListener('click', function(){
+    const isShown = hintText.style.display === 'block';
+    hintText.style.display = isShown ? 'none' : 'block';
+    hintText.textContent = STAGES[stage].hint;
+    hintToggle.textContent = isShown ? "Password's structure" : "Hide password's structure";
+  });
+
+  backBtn.addEventListener('click', function(){
+    viewingIndex = null;
+    render();
+  });
+
+  render();
+
+</script>
+</body>
+</html>

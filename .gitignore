@@ -1,0 +1,4 @@
+graveyard/
+*.json
+*.bak
+__pycache__/
