@@ -32,13 +32,10 @@
     *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
   }
 
-  html, body{
-    height: 100%;
-  }
-
   body{
     margin: 0;
     min-height: 100vh;
+    min-height: 100dvh;
     background:
       radial-gradient(ellipse at 50% -10%, rgba(198,161,91,0.10), transparent 55%),
       radial-gradient(ellipse at 50% 110%, rgba(0,0,0,0.6), transparent 60%),
@@ -280,6 +277,14 @@
     40%, 60% { transform: translateX(4px); }
   }
   .shake{ animation: shake 0.5s ease; }
+
+  /* Added while the on-screen keyboard is open (see JS below) so there's
+     always extra room underneath the input for the browser to scroll to —
+     without this, phones have nothing to scroll to and the keyboard just
+     covers the input instead. */
+  body.keyboard-open{
+    padding-bottom: 50vh;
+  }
 
   .note{
     background: #efe6cf;
@@ -612,6 +617,20 @@
   backBtn.addEventListener('click', function(){
     viewingIndex = null;
     render();
+  });
+
+  // Phones don't reflow the page when the on-screen keyboard opens, so
+  // without this the keyboard can simply cover the input. Adding bottom
+  // padding while typing gives the page room to scroll to, and
+  // scrollIntoView nudges the input above the keyboard.
+  passInput.addEventListener('focus', function(){
+    document.body.classList.add('keyboard-open');
+    setTimeout(function(){
+      passInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 300);
+  });
+  passInput.addEventListener('blur', function(){
+    document.body.classList.remove('keyboard-open');
   });
 
   render();
