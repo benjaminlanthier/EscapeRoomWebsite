@@ -295,6 +295,7 @@
     border-radius: 2px;
     line-height: 1.6;
     font-size: 15px;
+    white-space: pre-line;
     box-shadow: 0 14px 34px rgba(0,0,0,0.35);
     opacity: 0;
     transform: translateY(10px);
@@ -360,7 +361,7 @@
         <div class="line right"></div>
       </div>
       <h1 id="clubTitle">Le Club 27</h1>
-      <div class="subtitle" id="subtitle">Knock twice. Speak the word.</div>
+      <div class="subtitle" id="subtitle">Protégez le registre</div>
 
       <div class="seal-wrap">
         <div class="seal" id="seal">27</div>
@@ -374,20 +375,20 @@
         </div>
         <div class="feedback" id="feedback" aria-live="polite"></div>
         <div class="hint-area" id="hintArea" style="display:none;">
-          <button type="button" class="hint-toggle" id="hintToggle">Password's structure</button>
+          <button type="button" class="hint-toggle" id="hintToggle">Indice</button>
           <div class="hint-text" id="hintText"></div>
         </div>
       </form>
 
       <div class="note" id="noteBox">
-        <span class="eyebrow" id="noteEyebrow">Clue</span>
+        <span class="eyebrow" id="noteEyebrow">Indice</span>
         <div id="noteText"></div>
-        <button class="continue-btn" id="continueBtn" style="display:none;">Next door →</button>
-        <button class="continue-btn" id="backBtn" style="display:none;">← Back to your door</button>
+        <button class="continue-btn" id="continueBtn" style="display:none;">Prochain code →</button>
+        <button class="continue-btn" id="backBtn" style="display:none;">← Code précédent</button>
       </div>
     </div>
 
-    <footer>Le Club 27 &middot; members only</footer>
+    <footer>Le Club 27 &middot; - Membres seulement</footer>
   </div>
 
 <script>
@@ -412,28 +413,46 @@
   // ===STAGES_START===
   const STAGES = [
     {
-      salt: "i1h1ifA7XuzSKG5xWH0JUA==",
-      iv: "/STA/mEn486znW2u",
-      ciphertext: "k+y4qKY/KG83cdHLQrVcyPsFAoBzfQEHERkiUwUXGu2keTEE6UEmPX9pyVYvShxl/pwtmmzlGF/A18CuqTy+cim7X7JwtsTnRicQZBTGUl4FZYaDzQVHqhv6cI66DUvwVJW8D4B6XXu5QhtVRFefxWMRRJIJKO0JT7j+yQ==",
-      hint: "hint number 1"
+      salt: "DM4ScmZolUxeHhcs///pMA==",
+      iv: "OuB4MUqsDaKw9xZz",
+      ciphertext: "BA9igOzO7+O+pyMyBKZsKuw6nIm172jm9wT74mzYr24qF1eqTG6GDuk0i3CJF2qbab9sil4q4j2/0nHjL7iZ06uFPH5recOj+UKs4C5ffixEd0KSa7qjAsjnGXqnQlaamJvX9S2w",
+      hint: "Montant d'argent."
     },
     {
-      salt: "UESAnQrVYW3WwqZrkXUI4g==",
-      iv: "j4erUD5O+OuSQLMq",
-      ciphertext: "0uGSjZFFaP7MD2ZyjA6MuOLGiWJhL3AIiey6IKl1f9oLLrd/PqD0LYUZijKtUWqYtP/BMk0p3Q4FhCwrt0OlmVCS/HlaOJcHTNxtNrefHRwi2lsn/CEVBsLebLkypx96o27okluoFx00bWSJ2xE3CNHkHUU=",
-      hint: "hint number 2"
+      salt: "psN+3rWaqmWA92ehtbbs0A==",
+      iv: "AxtG4CSnAnykYtxi",
+      ciphertext: "5mnZ1XbjE4aEPNjH1NbadR4uVPIdoxxOIOl8ic9POe4rKpa3W4n7mlkvZHdYtN7/w3ceL5GncDMqnf3fFiIVmtSlVOZLIAWBa0ZZDTzBn1X5HYRUF4isJtl/1SHRyviDYTrwlST6pW0k0N7H2+GCj+r9c1NtsPWrPd775l2IOEdWnRxBen9gYi8PJA==",
+      hint: "SANS MAJUSCULE."
     },
     {
-      salt: "aOGJyK94V3tWX5D76mwAHA==",
-      iv: "D6cPiIlkz2jfZaqk",
-      ciphertext: "JsygmBUxwVZQQToea8qXfe5EGThiZTkgxMZ6W8ry15I+eYReWhQfuLpPWGLWJep3B1wNeQJf+dJQuP6EBMECzqyBSJ+yfgQJxLZOkWznCHwnq0ASCDHXnKXrHX5T4IW5vCbkr2fnGh93x0BG0TJmg4Q=",
-      hint: "hint number 3"
+      salt: "GJCO5My7hViaZhwVgf/1zw==",
+      iv: "RhT/PJBmSqu3tcit",
+      ciphertext: "f6lvn+P/v6AQQHinxZ9pogpIG9kuhGwySRfUzz1J/SicWhn63tNvabSOyH5/AB41tkeGnvShbYO76xDsLyp7sCtJaJ4mxMwm8qpdzKF67fFZ",
+      hint: "Que faisons-nous généralement avec 10 chiffres?"
     },
     {
-      salt: "bVhlMUVkevSr8f8ubs2Kng==",
-      iv: "v+7mOVas//w+sEUD",
-      ciphertext: "nYaJwHZLFYH638TyA4uwaXbnAEKZ01LpdrYGn+AD8PWMyCneQmkcVC0BXzGm/SbnAs4e/hHd2GnOF8C6+ct7XwJMzBKUSgG2JGegjZHEB1EIJQ80WGBb9PY7jdg9oRR7QBgFZD3t",
-      hint: "hint number 4"
+      salt: "EZV2SaYW19WxEXD707GVoA==",
+      iv: "PJyIIXuf0ihR8Pmw",
+      ciphertext: "AUCE02K6V+D1DRyopeFgofbyw4ehrye5+jLh6QfjjLmU7285SxS3CWsxQxJdNUst7WrafLmc6VBPz9bCQn0YbwAAeYdHmGYSd1pCi9VzK8+1XNvRnzpglB9wB694uoFDBeMd8bh1CsuGmAbLJKK06X4opIIR29h1xnRH25l7imrbXXGejuP2O9UehTdle5kt7lXnGSI3mjY+2vPGUvIZN5+QgiWD6Rb75/XKneD/mYGQZW3Kr2D38FSTCO9fEfJi5jwRFDZB/Y0l5ahOfKCHarvB1jdZXlHthMIAwzzODKHAAJ+W0OpTPwo6YkOvsPNUarZupbgGJCB4xuYD58/xRmiEe/Gps5HgkYMkSDeckbiW12PGYtp0w1nlyJqmeEwFPb6hjTlU757ZOJ3v8gvZXBCtYTuq4Sf+72vTC+bXPHZWb9r2ASwH+tS/01tDmxtqZeu8sF9U0TExUUDsLUbZKB69BevV4qoNmMA0rV87dhDw86HqEpgg6xuVJc7TqaXDnpnGW2Y2NNe3PWGfF25tQXSJYoecv8YbEVNctk7tIZLuG4zumq87a0sI+oxX5P0KrbqAZWMr1ltBlCOfMw3ZVcU56fySOiQo25hquWB9zT81G0tAE8p6+I8Tcpp6sqLwfAdE6yTajPBX3MUsibZiJ/ak0jiEBzWpFVBydikpZBmdE/z0Dvmx65rzQ/uvJ5gTirBMmf46JpD6P93aw5KZ3v8KQqVDeuu1/afQp0tZLskkXe6zeFNc2Q7SzAj1ij0vKXCxyKkMHtqR+77CdvUoRIygPuuRWvJJCYQlOrLguplfvlwCFL/Wp8nd4AVvKBjJ2dCxaCwbSDzIrKJNhUVqHvvp6p+H3BbHLNweGM1iP+VeYv/xP7VYQAn655uDJR2Zfl0aRPqaFHx8zdTpdJC31VcIA1h0l/X7C5bAAqDEi6OCbKcX6kv7u470zfbIG+iNmyCF8Dv1eZNmTdp+jpGHp+6vAuaVzrc93zIvvcx1TxzLtpKJKUyqQ42VNcorv0hEPu3DMATuzuiNS1kc9UiTUwdnNUgWa5Y/S+5OVSZbTkzsg4fJEB5hbz5zryoEIqMg/k/OG2/A8f6dDrol28c2rlZvJ6shU4OzBpaHhcfZph0=",
+      hint: "Portez une attention paritculière aux ingrédients."
+    },
+    {
+      salt: "zjD3nknLdEHr+W4jSVTxiQ==",
+      iv: "sB5uLzDj3VR2ST0O",
+      ciphertext: "MulkmLKg7yDJ/+YQm56BLen05dxL2jQ/L1bYtTBI/hQdN17TCeYMPhXGyETcK/q4aepCbUp6uZbueJn3OkrSlFaz8UWuWiJVNgPax06HMIn/JRrskbkl6O+EKJuny3bt0hNmzCyPj9U/j/5SVDn4IeZJja0XtXR2Tr+PFd7HIp1Omw9UCmYeektvu6Uw/Hc=",
+      hint: "Entrez les numéros des fournisseurs un à la suite de l'autre (sans espace ni virgule) dans le bon ordre."
+    },
+    {
+      salt: "Pagrc4wimGmCSQF4+cXi1g==",
+      iv: "Rr562fr7K4BtA/sd",
+      ciphertext: "VPh5k3MUUrbXxuLyaZ3ozFiLOidUMzcsHINbiBVBs04J6fOIeYGt0YsM",
+      hint: "en minuscule. Si ça ne fonctionne pas, écrivez le dans l'autre sense!"
+    },
+    {
+      salt: "B25HTmYBjP0fpi6tEEN+Uw==",
+      iv: "l7ltfrIQiIt4+req",
+      ciphertext: "OC0aeZcXfLs2Qa5IHeq6fg==",
+      hint: ""
     }
   ];
   // ===STAGES_END===
@@ -469,7 +488,7 @@
   }
 
   const FINAL_TITLE = "You're in.";
-  const FINAL_MESSAGE = "Enjoy the rest of the night. Tell the host you made it through every door.";
+  const FINAL_MESSAGE = "[Cliquez ici](https://canva.link/lwssr9no1ktt7d2)";
 
   // ------------------------------------------------------------------
   // Everything below this line runs the page. No need to edit it.
@@ -505,7 +524,7 @@
       const isDone = i < stage;
       const isCurrent = i === stage;
       tab.className = 'tab' + (isDone ? ' done' : isCurrent ? ' current' : ' locked');
-      tab.textContent = 'DOOR ' + (i + 1);
+      tab.textContent = 'Code ' + (i + 1);
       if (isDone){
         tab.title = 'Click to re-read this clue';
         tab.addEventListener('click', function(){
@@ -532,8 +551,8 @@
 
     if (viewingIndex !== null){
       // Reviewing a past door — read only, doesn't touch game progress.
-      noteEyebrow.textContent = 'Clue ' + (viewingIndex + 1);
-      noteText.textContent = decryptedClues[viewingIndex];
+      noteEyebrow.textContent = 'Indice ' + (viewingIndex + 1);
+      renderClue(decryptedClues[viewingIndex]);
       noteBox.classList.add('shown');
       seal.classList.add('cracked');
       passForm.style.display = 'none';
@@ -545,8 +564,8 @@
     backBtn.style.display = 'none';
 
     if (awaitingContinue){
-      noteEyebrow.textContent = isFinal ? 'Welcome' : 'Clue ' + stage;
-      noteText.textContent = isFinal ? FINAL_MESSAGE : decryptedClues[stage - 1];
+      noteEyebrow.textContent = isFinal ? 'BRAVO!!!' : 'Indice ' + stage;
+      renderClue(isFinal ? FINAL_MESSAGE : decryptedClues[stage - 1]);
       noteBox.classList.add('shown');
       seal.classList.add('cracked');
       passForm.style.display = 'none';
@@ -565,8 +584,18 @@
 
     const hint = STAGES[stage] && STAGES[stage].hint;
     hintText.style.display = 'none';
-    hintToggle.textContent = "Password's structure";
+    hintToggle.textContent = "Indice";
     hintArea.style.display = hint ? 'block' : 'none';
+  }
+
+  function renderClue(text) {
+    noteText.innerHTML = text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(
+        /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+        '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+      )
+      .replace(/\n/g, '<br>');
   }
 
   const submitBtn = passForm.querySelector('button[type="submit"]');
@@ -591,7 +620,7 @@
       }
       render();
     } catch (err) {
-      feedback.textContent = "Nerd 😂 Try again.";
+      feedback.textContent = "Nerd 😂 Essaie encore.";
       passInput.classList.remove('shake');
       void passInput.offsetWidth;
       passInput.classList.add('shake');
@@ -611,7 +640,7 @@
     const isShown = hintText.style.display === 'block';
     hintText.style.display = isShown ? 'none' : 'block';
     hintText.textContent = STAGES[stage].hint;
-    hintToggle.textContent = isShown ? "Password's structure" : "Hide password's structure";
+    hintToggle.textContent = isShown ? "Indice" : "Cacher l'indice";
   });
 
   backBtn.addEventListener('click', function(){
